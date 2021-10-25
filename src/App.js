@@ -1,26 +1,48 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { createContext, useContext } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import Home from './container/Home';
 import Library from './container/Library';
 import Login from './container/Login';
 
-function App({ contract, nearConfig }) {
-  console.log(nearConfig);
+const AuthContext = createContext();
+
+function App({ contract, nearConfig, currentUser }) {
   return (
-    <Router>
-      <Switch>
-        <Route path="/library">
-          <Library />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
+    <AuthContext.Provider value={currentUser}>
+      <Router>
+        <Switch>
+          <PrivateRoute path="/library">
+            <Library />
+          </PrivateRoute>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <PrivateRoute path="/" exact>
+            <Home />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
   );
 }
+
+const PrivateRoute = () => {
+  const auth = useContext(AuthContext);
+
+  if (!auth) {
+    return <Redirect to="/login" />;
+  }
+
+  return (
+    <Route path="/" exact>
+      <Home />
+    </Route>
+  );
+};
 
 export default App;
