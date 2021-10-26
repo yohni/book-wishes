@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,41 +6,41 @@ import {
   Redirect,
 } from 'react-router-dom';
 import Home from './container/Home';
-import Library from './container/Library';
 import Login from './container/Login';
+import Library from './container/Library';
+import { AuthProvider, useAuthContext } from './context';
 
-const AuthContext = createContext();
-
-function App({ contract, nearConfig, currentUser }) {
+function App({ contract, nearConfig, currentUser, wallet }) {
+  const value = { contract, nearConfig, currentUser, wallet };
   return (
-    <AuthContext.Provider value={currentUser}>
+    <AuthProvider value={value}>
       <Router>
         <Switch>
-          <PrivateRoute path="/library">
-            <Library />
-          </PrivateRoute>
           <Route path="/login">
             <Login />
           </Route>
+          <PrivateRoute path="/library">
+            <Library />
+          </PrivateRoute>
           <PrivateRoute path="/" exact>
             <Home />
           </PrivateRoute>
         </Switch>
       </Router>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 }
 
-const PrivateRoute = () => {
-  const auth = useContext(AuthContext);
+const PrivateRoute = ({ path, exact, children }) => {
+  const { currentUser } = useAuthContext();
 
-  if (!auth) {
+  if (!currentUser) {
     return <Redirect to="/login" />;
   }
 
   return (
-    <Route path="/" exact>
-      <Home />
+    <Route path={path} exact={exact}>
+      {children}
     </Route>
   );
 };

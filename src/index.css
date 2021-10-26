@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .container {
+    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-6xl mx-auto;
+  }
+
+  .typo-h1 {
+    @apply font-bold text-5xl md:text-7xl;
+  }
+
+  .typo-h2 {
+    @apply font-bold text-4xl md:text-5xl;
+  }
+
+  .typo-sub {
+    @apply text-lg font-normal md:text-2xl opacity-60;
+  }
+
+  .hover-effect {
+    @apply hover:-translate-y-1 transform;
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,9 +31,4 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
