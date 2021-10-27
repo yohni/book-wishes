@@ -14,7 +14,7 @@ const Navbar = () => {
   const closeNavs = () => setIsOpen(false);
 
   return (
-    <div className="fixed inset-0 md:inset-x-0 md:top-0 md:bottom-auto md:bg-neutral pointer-events-none">
+    <div className="fixed inset-0 md:inset-x-0 md:top-0 md:bottom-auto md:bg-neutral pointer-events-none z-20">
       <div className="navbar shadow-lg bg-neutral text-neutral-content z-20 relative pointer-events-auto">
         <Link to="/" className="flex-1 px-2 mx-2">
           <span className="text-lg font-bold">BookWishes</span>

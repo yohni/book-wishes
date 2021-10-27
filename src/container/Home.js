@@ -12,14 +12,16 @@ const Home = () => {
   };
 
   const fetchBook = () => {
-    contract.get_book({ book_id: 1 }).then((resp) => setBooks(resp));
-    console.log(books);
+    contract
+      .get_books({ account_id: currentUser.account_id, skip: 0, limit: 10 })
+      .then((resp) => setBooks(resp));
   };
 
   useEffect(() => {
     fetchBook();
   }, []);
 
+  console.log(books);
   return (
     <Main>
       <div>
