@@ -6,7 +6,7 @@ import App from './App';
 import getConfig from './config';
 
 async function initContract() {
-  const nearConfig = getConfig(process.env.NODE_ENV || 'testnet');
+  const nearConfig = getConfig(process.env.NODE_ENV || 'development');
   // Initializing connection to the NEAR TestNet
   const near = await nearAPI.connect({
     deps: {

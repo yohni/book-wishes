@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { H1, Subtitle } from '../component/Typography';
 import { useAuthContext } from '../context';
 import Main from '../layout/Main';
 
 const Home = () => {
   const { contract, nearConfig, currentUser, wallet } = useAuthContext();
+  const [books, setBooks] = useState(null);
 
   const handleLogin = () => {
     wallet.requestSignIn(nearConfig.contractName, 'NEAR book wishes');
   };
+
+  const fetchBook = () => {
+    contract.get_book({ book_id: 1 }).then((resp) => setBooks(resp));
+    console.log(books);
+  };
+
+  useEffect(() => {
+    fetchBook();
+  }, []);
 
   return (
     <Main>
@@ -45,7 +55,9 @@ const Home = () => {
             />
           </div>
         </div>
-        <div>GHakjsdha</div>
+        <div>
+          <button className="btn">Test</button>
+        </div>
       </div>
     </Main>
   );
