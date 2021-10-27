@@ -12,3 +12,7 @@ export const H2 = ({ children, className }) => {
 export const Subtitle = ({ children, className }) => {
   return <p className={classNames('typo-sub', className)}>{children}</p>;
 };
+
+export const Paragraph = ({ children, className }) => {
+  return <p className={classNames('text-lg', className)}>{children}</p>;
+};

@@ -4,7 +4,7 @@
 
 @layer components {
   .container {
-    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-6xl mx-auto;
+    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-7xl mx-auto;
   }
 
   .typo-h1 {
@@ -31,4 +31,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.line-clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.slick-track {
+  display: flex !important;
+  align-items: stretch;
+}
+
+.slick-slide {
+  height: inherit !important;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+}
+.slick-slide div {
+  height: 100%;
 }
