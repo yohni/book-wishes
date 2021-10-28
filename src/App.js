@@ -14,7 +14,7 @@ function App({ contract, nearConfig, currentUser, wallet }) {
   const value = { contract, nearConfig, currentUser, wallet };
   return (
     <AuthProvider value={value}>
-      <Router>
+      <Router basename="/book-wishes">
         <Switch>
           <Route path="/login">
             <Login />
