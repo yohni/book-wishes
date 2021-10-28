@@ -17,7 +17,7 @@ const Home = () => {
     setLoading(true);
     try {
       contract
-        .get_books({ account_id: currentUser.account_id, skip: 0, limit: 10 })
+        .get_books({ account_id: currentUser.account_id, skip: 0, limit: 5 })
         .then((resp) => setBooks(resp))
         .then(() => setLoading(false));
     } catch (error) {
@@ -31,19 +31,23 @@ const Home = () => {
 
   var settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    initialSlide: 0,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
-          dots: true,
+        },
+      },
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
         },
       },
       {
@@ -51,7 +55,6 @@ const Home = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2,
         },
       },
       {
@@ -99,15 +102,20 @@ const Home = () => {
             />
           </div>
         </div>
-        <div className="py-7 md:py-9 container">
-          <H2 className="mb-2">Best Seller</H2>
-          <Subtitle className="mb-4">Almost read by a lot of reader</Subtitle>
-          <div>
+
+
+        {/* best seller */}
+        <div className="py-7 md:py-9">
+          <div className="container text-center mb-6">
+            <H2 className="mb-2">Best Seller</H2>
+            <Subtitle className="">Almost read by a lot of reader</Subtitle>
+          </div>
+          <div className="mx-auto container px-4">
             {loading && <div>Loading</div>}
             <Slider {...settings}>
               {books?.map((item, key) => (
-                <div className="px-4 h-full">
-                  <div key={key} className="card text-center shadow-2xl">
+                <div className="p-4 h-full">
+                  <div key={key} className="card text-center shadow">
                     <figure className="px-10 pt-10">
                       <img
                         src={item.image}
@@ -115,18 +123,17 @@ const Home = () => {
                         alt=""
                       />
                     </figure>
-                    <div className="">
+                    <div className="px-10 py-6 flex flex-col">
                       <Subtitle className="card-title font-bold">
                         {item.title}
                       </Subtitle>
-                      <Paragraph className="line-clamp  opacity-80">
+                      <Paragraph className="line-clamp  opacity-80 mb-6">
                         {item.description}
                       </Paragraph>
-                      <div className="justify-center items-end card-actions mt-auto">
-                        <button className="btn btn-outline btn-accent">
-                          Read Now
-                        </button>
-                      </div>
+
+                      <button className="btn btn-outline btn-accent mt-auto">
+                        Read Now
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -134,6 +141,8 @@ const Home = () => {
             </Slider>
           </div>
         </div>
+
+        {/* section feature */}
       </div>
     </Main>
   );

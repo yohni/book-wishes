@@ -3,6 +3,14 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        xs: '0px',
+        sm: '600px',
+        md: '960px',
+        lg: '1170px',
+        xxl: '1590px',
+        xl: '1920px',
+      },
       backgroundImage: {
         primary_gradient:
           'linear-gradient(90deg, hsla(13, 86%, 55%, 1) 0%, hsla(13, 75%, 60%, 1) 100%)',

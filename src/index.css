@@ -4,7 +4,7 @@
 
 @layer components {
   .container {
-    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-7xl mx-auto;
+    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-7xl mx-auto overflow-hidden;
   }
 
   .typo-h1 {
