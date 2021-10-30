@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import Spinner from '../component/Spinner';
 import { H1, Subtitle } from '../component/Typography';
 import { useAuthContext } from '../context';
 import Main from '../layout/Main';
 
 function Login() {
-  const { contract, nearConfig, currentUser, wallet } = useAuthContext();
+  const { nearConfig, currentUser, wallet } = useAuthContext();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
+    setLoading(true);
     wallet.requestSignIn(nearConfig.contractName, 'NEAR book wishes');
   };
 
-  const handleLogout = () => {
-    wallet.signOut();
-    window.location.replace(window.location.origin + window.location.pathname);
-  };
+  if (currentUser) {
+    return <Redirect to="/library" />;
+  }
 
   return (
     <Main className="flex items-stretch">
@@ -40,6 +43,7 @@ function Login() {
           </button>
         </div>
       </div>
+      {loading && <Spinner />}
     </Main>
   );
 }

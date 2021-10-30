@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
+import Card from '../component/Card';
+import Spinner from '../component/Spinner';
 import { H1, H2, Paragraph, Subtitle } from '../component/Typography';
 import { useAuthContext } from '../context';
 import Main from '../layout/Main';
@@ -8,9 +11,18 @@ const Home = () => {
   const { contract, nearConfig, currentUser, wallet } = useAuthContext();
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const handleLogin = () => {
-    wallet.requestSignIn(nearConfig.contractName, 'NEAR book wishes');
+    setLoading(true);
+    if (currentUser) {
+      setTimeout(() => {
+        history.push('/library');
+        return;
+      }, 3000);
+    } else {
+      wallet.requestSignIn(nearConfig.contractName, 'NEAR book wishes');
+    }
   };
 
   const fetchBook = () => {
@@ -103,7 +115,6 @@ const Home = () => {
           </div>
         </div>
 
-
         {/* best seller */}
         <div className="py-7 md:py-9">
           <div className="container text-center mb-6">
@@ -111,31 +122,10 @@ const Home = () => {
             <Subtitle className="">Almost read by a lot of reader</Subtitle>
           </div>
           <div className="mx-auto container px-4">
-            {loading && <div>Loading</div>}
             <Slider {...settings}>
               {books?.map((item, key) => (
-                <div className="p-4 h-full">
-                  <div key={key} className="card text-center shadow">
-                    <figure className="px-10 pt-10">
-                      <img
-                        src={item.image}
-                        className="object-contain w-52 h-64"
-                        alt=""
-                      />
-                    </figure>
-                    <div className="px-10 py-6 flex flex-col">
-                      <Subtitle className="card-title font-bold">
-                        {item.title}
-                      </Subtitle>
-                      <Paragraph className="line-clamp  opacity-80 mb-6">
-                        {item.description}
-                      </Paragraph>
-
-                      <button className="btn btn-outline btn-accent mt-auto">
-                        Read Now
-                      </button>
-                    </div>
-                  </div>
+                <div key={key} className="p-4 h-full">
+                  <Card {...item} status="Best Seller" />
                 </div>
               ))}
             </Slider>
@@ -144,6 +134,7 @@ const Home = () => {
 
         {/* section feature */}
       </div>
+      {loading && <Spinner />}
     </Main>
   );
 };

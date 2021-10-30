@@ -11,6 +11,9 @@ module.exports = {
         xxl: '1590px',
         xl: '1920px',
       },
+      colors: {
+        bookwishes: '#EC5932',
+      },
       backgroundImage: {
         primary_gradient:
           'linear-gradient(90deg, hsla(13, 86%, 55%, 1) 0%, hsla(13, 75%, 60%, 1) 100%)',

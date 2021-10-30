@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   HashRouter as Router,
   Switch,
@@ -9,6 +9,7 @@ import Home from './container/Home';
 import Login from './container/Login';
 import Library from './container/Library';
 import { AuthProvider, useAuthContext } from './context';
+import { ToastContainer } from 'react-toastify';
 
 function App({ contract, nearConfig, currentUser, wallet }) {
   const value = { contract, nearConfig, currentUser, wallet };
@@ -27,6 +28,17 @@ function App({ contract, nearConfig, currentUser, wallet }) {
           </PrivateRoute>
         </Switch>
       </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </AuthProvider>
   );
 }
