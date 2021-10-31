@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
+import { toast } from 'react-toastify';
 import Card from '../component/Card';
 import Spinner from '../component/Spinner';
 import { H1, H2, Paragraph, Subtitle } from '../component/Typography';
@@ -9,9 +11,12 @@ import Main from '../layout/Main';
 
 const Home = () => {
   const { contract, nearConfig, currentUser, wallet } = useAuthContext();
+  const history = useHistory();
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+  const [hasMore, setHasMore] = useState(true);
+  const [allBooks, setAllBooks] = useState([]);
+  const [skip, setSkip] = useState(0);
 
   const handleLogin = () => {
     setLoading(true);
@@ -25,21 +30,53 @@ const Home = () => {
     }
   };
 
-  const fetchBook = () => {
+  const fetchBook = ({ skip, limit }) => {
     setLoading(true);
-    try {
-      contract
-        .get_books({ account_id: currentUser.account_id, skip: 0, limit: 5 })
-        .then((resp) => setBooks(resp))
-        .then(() => setLoading(false));
-    } catch (error) {
-      setLoading(false);
-    }
+    contract
+      .get_books({ account_id: currentUser.account_id, skip, limit })
+      .then((resp) => setBooks(resp))
+      .then(() => setLoading(false))
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+        toast.error('Failed to fetch data 😢');
+      });
+  };
+
+  const fetchAllbooks = ({ skip, limit }) => {
+    setLoading(true);
+    contract
+      .get_books({ account_id: currentUser.account_id, skip, limit })
+      .then((resp) => setAllBooks([...resp, ...allBooks]))
+      .then(() => setLoading(false))
+      .catch((error) => {
+        setLoading(false);
+        setHasMore(false);
+        console.log(error);
+        if (!String(error).includes('please use a smaller skip'))
+          toast.error('Failed to fetch data 😢');
+      });
+  };
+
+  const fetchDataMore = () => {
+    setSkip(skip + 10);
   };
 
   useEffect(() => {
-    fetchBook();
+    const bestParams = {
+      skip: 0,
+      limit: 10,
+    };
+    fetchBook(bestParams);
   }, []);
+
+  useEffect(() => {
+    const allParams = {
+      skip,
+      limit: 10,
+    };
+    fetchAllbooks(allParams);
+  }, [skip]);
 
   var settings = {
     dots: true,
@@ -130,6 +167,56 @@ const Home = () => {
               ))}
             </Slider>
           </div>
+        </div>
+
+        <div className="py-9 md:py-48 bg-bookwishes text-white">
+          <div className="container">
+            <H1>
+              <q className="italic">
+                It is a good rule after reading a new book, never to allow
+                yourself another new one till you have read an old one in
+                between.
+              </q>
+              &mdash;C.S. Lewis
+            </H1>
+          </div>
+        </div>
+
+        {/* all books */}
+        <div className="py-7 md:py-9">
+          <div className="container text-center mb-6">
+            <H2 className="mb-2">All book we have</H2>
+            <Subtitle className="">Pick your book!</Subtitle>
+          </div>
+
+          <InfiniteScroll
+            dataLength={allBooks.length} //This is important field to render the next data
+            next={fetchDataMore}
+            hasMore={hasMore}
+            loader={
+              <h4 className="text-center text-lg text-gray-400">
+                Catching more books...
+              </h4>
+            }
+          >
+            <div className="container py-6 md:py-9">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-9">
+                {allBooks.map((item, key) => (
+                  <div key={key} className="h-full flex flex-col">
+                    <Card id={key} {...item} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </InfiniteScroll>
+          {!loading && allBooks.length < 1 && (
+            <div className="w-full h-96 flex flex-col justify-center items-center text-xl">
+              <div>🙅🏻‍♂️</div>
+              <div className="text-neutral opacity-60 font-bold">
+                Books not found!
+              </div>
+            </div>
+          )}
         </div>
 
         {/* section feature */}

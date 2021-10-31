@@ -1,8 +1,19 @@
 import classNames from 'classnames';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import BookForm from './BookForm';
+import Modal from './Modal';
 import { Paragraph, Subtitle } from './Typography';
 
-const Card = ({ image, title, description, status }) => {
+const Card = ({
+  image,
+  title,
+  description,
+  status,
+  account_id,
+  book_id,
+  id,
+}) => {
   const STATUS_STYLES = {
     list: 'bg-error text-white',
     read: 'bg-success text-white',
@@ -20,7 +31,32 @@ const Card = ({ image, title, description, status }) => {
           {description}
         </Paragraph>
 
-        <button className="btn btn-outline btn-accent mt-auto">Read Now</button>
+        {Object.keys(STATUS_STYLES)
+          .slice(0, 3)
+          .includes(status.toLowerCase()) ? (
+          <Modal
+            id={id}
+            noAction
+            text="Detail"
+            className=" btn btn-outline btn-accent mt-auto"
+          >
+            <BookForm
+              id={id}
+              bookData={{
+                image,
+                title,
+                description,
+                status,
+                book_id,
+                account_id,
+              }}
+            />
+          </Modal>
+        ) : (
+          <Link className=" btn btn-outline btn-accent mt-auto" to="/library">
+            Go to Library
+          </Link>
+        )}
       </div>
       {status !== 'All' && (
         <Paragraph

@@ -99,7 +99,7 @@ const Library = () => {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-9">
             {filtered.map((item, key) => (
               <div key={key} className="h-full flex flex-col">
-                <Card {...item} />
+                <Card id={key} {...item} />
               </div>
             ))}
           </div>
@@ -113,7 +113,11 @@ const Library = () => {
           </div>
         </div>
       )}
-      <Modal noAction>
+      <Modal
+        noAction
+        text="&#x2B; New Book"
+        className="fixed bottom-8 right-8 shadow-2xl"
+      >
         <BookForm />
       </Modal>
       {loading && <Spinner />}
