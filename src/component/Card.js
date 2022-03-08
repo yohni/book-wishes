@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import BookForm from './BookForm';
-import Modal from './Modal';
-import { Paragraph, Subtitle } from './Typography';
+import classNames from "classnames";
+import React from "react";
+import { Link } from "react-router-dom";
+import BookForm from "./BookForm";
+import Modal from "./Modal";
+import { Paragraph, Subtitle } from "./Typography";
 
 const Card = ({
   image,
@@ -15,13 +15,13 @@ const Card = ({
   id,
 }) => {
   const STATUS_STYLES = {
-    list: 'bg-error text-white',
-    read: 'bg-success text-white',
-    finished: 'bg-gray-500 text-white',
-    'best seller': 'bg-warning text-white',
+    list: "bg-error text-white",
+    read: "bg-success text-white",
+    finished: "bg-gray-500 text-white",
+    "best seller": "bg-warning text-white",
   };
   return (
-    <div className="card text-center shadow flex-grow">
+    <div className="card text-center flex-grow shadow-xl">
       <figure className="px-10 pt-10">
         <img src={image} className="object-contain w-52 h-64" alt="" />
       </figure>
@@ -38,7 +38,7 @@ const Card = ({
             id={id}
             noAction
             text="Detail"
-            className=" btn btn-outline btn-accent mt-auto"
+            className=" btn btn-primary mt-auto"
           >
             <BookForm
               id={id}
@@ -53,15 +53,15 @@ const Card = ({
             />
           </Modal>
         ) : (
-          <Link className=" btn btn-outline btn-accent mt-auto" to="/library">
+          <Link className=" btn btn-primary mt-auto" to="/library">
             Go to Library
           </Link>
         )}
       </div>
-      {status !== 'All' && (
+      {status !== "All" && (
         <Paragraph
           className={classNames(
-            'absolute top-8 right-0 font-bold py-2 rounded-l-2xl pr-4 pl-8 bg-white text-black',
+            "absolute top-8 right-0 font-bold py-2 rounded-l-2xl pr-4 pl-8 bg-white text-black",
             STATUS_STYLES[status.toLowerCase()]
           )}
         >

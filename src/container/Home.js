@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useHistory } from 'react-router-dom';
-import Slider from 'react-slick';
-import { toast } from 'react-toastify';
-import Card from '../component/Card';
-import Spinner from '../component/Spinner';
-import { H1, H2, Paragraph, Subtitle } from '../component/Typography';
-import { useAuthContext } from '../context';
-import Main from '../layout/Main';
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useHistory } from "react-router-dom";
+import Slider from "react-slick";
+import { toast } from "react-toastify";
+import Card from "../component/Card";
+import Spinner from "../component/Spinner";
+import { H1, H2, Paragraph, Subtitle } from "../component/Typography";
+import { useAuthContext } from "../context";
+import Main from "../layout/Main";
 
 const Home = () => {
   const { contract, nearConfig, currentUser, wallet } = useAuthContext();
@@ -22,11 +22,11 @@ const Home = () => {
     setLoading(true);
     if (currentUser) {
       setTimeout(() => {
-        history.push('/library');
+        history.push("/library");
         return;
       }, 3000);
     } else {
-      wallet.requestSignIn(nearConfig.contractName, 'NEAR book wishes');
+      wallet.requestSignIn(nearConfig.contractName, "NEAR book wishes");
     }
   };
 
@@ -39,7 +39,7 @@ const Home = () => {
       .catch((error) => {
         setLoading(false);
         console.log(error);
-        toast.error('Failed to fetch data 😢');
+        toast.error("Failed to fetch data 😢");
       });
   };
 
@@ -53,8 +53,8 @@ const Home = () => {
         setLoading(false);
         setHasMore(false);
         console.log(error);
-        if (!String(error).includes('please use a smaller skip'))
-          toast.error('Failed to fetch data 😢');
+        if (!String(error).includes("please use a smaller skip"))
+          toast.error("Failed to fetch data 😢");
       });
   };
 
@@ -82,8 +82,8 @@ const Home = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     responsive: [
       {
         breakpoint: 1200,
@@ -125,7 +125,7 @@ const Home = () => {
             <div className="mb-6">
               <Subtitle className="mb-4">Online Book Stores</Subtitle>
               <H1 className="mb-4 md:mb-6">
-                Collect Your Most Wish Book by{' '}
+                Collect Your Most Wish Book by{" "}
                 <span className="bg-primary_gradient bg-clip-text text-transparent">
                   One Click
                 </span>
@@ -153,9 +153,9 @@ const Home = () => {
         </div>
 
         {/* best seller */}
-        <div className="py-7 md:py-9">
+        <div className="py-9">
           <div className="container text-center mb-6">
-            <H2 className="mb-2">Best Seller</H2>
+            <H2 className="mb-2 text-bookwishes">Best Seller</H2>
             <Subtitle className="">Almost read by a lot of reader</Subtitle>
           </div>
           <div className="mx-auto container px-4">
@@ -169,21 +169,23 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="py-9 md:py-48 bg-bookwishes text-white">
+        <div className="py-14 md:py-48 bg-bookwishes text-white">
           <div className="container">
-            <H1>
+            <H2>
               <q className="italic">
                 It is a good rule after reading a new book, never to allow
                 yourself another new one till you have read an old one in
                 between.
               </q>
+              <br />
+              <br />
               &mdash;C.S. Lewis
-            </H1>
+            </H2>
           </div>
         </div>
 
         {/* all books */}
-        <div className="py-7 md:py-9">
+        <div className="py-9">
           <div className="container text-center mb-6">
             <H2 className="mb-2">All book we have</H2>
             <Subtitle className="">Pick your book!</Subtitle>
