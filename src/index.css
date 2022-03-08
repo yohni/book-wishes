@@ -4,15 +4,15 @@
 
 @layer components {
   .container {
-    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-7xl mx-auto overflow-hidden;
+    @apply px-8 sm:px-12 md:px-16 lg:px-0 max-w-5xl mx-auto overflow-hidden;
   }
 
   .typo-h1 {
-    @apply font-bold text-5xl md:text-7xl;
+    @apply font-bold text-5xl md:text-7xl font-lora leading-snug;
   }
 
   .typo-h2 {
-    @apply font-bold text-4xl md:text-5xl;
+    @apply font-bold text-4xl md:text-5xl font-lora;
   }
 
   .typo-sub {
@@ -26,8 +26,6 @@
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
